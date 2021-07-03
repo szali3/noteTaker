@@ -1,5 +1,5 @@
 const express = require('express');
-const notes = require('./db/db.json');
+const notes = require('./Develop/db/db.json')
 const path = require('path');
 const fs = require('fs');
 
@@ -8,14 +8,14 @@ const PORT = 3001;
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('Develop/public'));
 
 app.get('/notes',(req,res)=>{
-  res.sendFile(path.join(__dirname, 'public/notes.html'));
+  res.sendFile(path.join(__dirname, 'Develop/public/notes.html'));
 });
 
 app.get('/',(req,res)=>{
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, 'Develop/public/index.html'));
 });
 
 app.get('/api/notes',(req,res)=>{
@@ -38,11 +38,11 @@ app.post('/api/notes',(req,res)=>{
     }
     notes.push(req.body);
 
-    fs.writeFile('db/db.json',JSON.stringify(notes, null, 2), function (err) {
+    fs.writeFile('Develop/db/db.json',JSON.stringify(notes, null, 2), function (err) {
       if (err) throw err;
       console.log('Saved!');
     });
-    res.sendFile(path.join(__dirname, 'public/notes.html'));
+    res.sendFile(path.join(__dirname, 'Develop/public/notes.html'));
 });
 
 app.delete('/api/notes/:id', function (req, res) {
@@ -50,11 +50,11 @@ app.delete('/api/notes/:id', function (req, res) {
     foundId = notes.find(element => element.id === selectID)
 
     notes.splice(notes.indexOf(foundId), 1);
-    fs.writeFile('db/db.json',JSON.stringify(notes, null, 2), function (err) {
+    fs.writeFile('Develop/db/db.json',JSON.stringify(notes, null, 2), function (err) {
       if (err) throw err;
       console.log('Saved!');
     });
-    res.sendFile(path.join(__dirname, 'public/notes.html'));
+    res.sendFile(path.join(__dirname, 'Develop/public/notes.html'));
 })
 
 app.listen(PORT,() => console.log(`Listening to your command in ${PORT}`)); 
