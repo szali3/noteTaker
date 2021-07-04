@@ -48,7 +48,6 @@ app.post('/api/notes',(req,res)=>{
 app.delete('/api/notes/:id', function (req, res) {
     selectID = parseInt(req.params.id);
     foundId = notes.find(element => element.id === selectID)
-
     notes.splice(notes.indexOf(foundId), 1);
     fs.writeFile('Develop/db/db.json',JSON.stringify(notes, null, 2), function (err) {
       if (err) throw err;
@@ -57,4 +56,4 @@ app.delete('/api/notes/:id', function (req, res) {
     res.sendFile(path.join(__dirname, 'Develop/public/notes.html'));
 })
 
-app.listen(PORT,() => console.log(`Listening to your command in ${PORT}`)); 
+app.listen(PORT,() => console.log(`Listening to your command in ${PORT}`));
